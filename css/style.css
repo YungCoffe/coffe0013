@@ -1,7 +1,12 @@
 /* ==========================================================
-Coffe | portfólio
-Tema preto com detalhes brancos
-========================================================== */
+   Coffe | portfólio
+   Para mudar cores, fonte ou espaçamentos, edite as variáveis
+   no bloco :root e nos blocos de tema logo abaixo.
+
+   Breakpoints usados (CSS não aceita variável em media query):
+   - 40em  (640px): margens laterais maiores
+   - 54em  (864px): layout em duas colunas
+   ========================================================== */
 
 :root {
   /* Tipografia */
@@ -24,7 +29,7 @@ Tema preto com detalhes brancos
   /* Formas, sombras e movimento */
   --radius-sm: 10px;
   --radius-round: 999px;
-  --shadow-1: 0 1px 2px rgba(255, 255, 255, 0.12);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.25);
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --transition: 0.18s ease;
 
@@ -32,18 +37,34 @@ Tema preto com detalhes brancos
   --max: 70rem;
   --col-side: 15rem;
   --col-gap: 4rem;
+}
 
-  /* Cores: preto com detalhes brancos */
-  --bg: #000000;
-  --surface: #111111;
-  --text: #ffffff;
-  --muted: #b3b3b3;
-  --line: rgba(255, 255, 255, 0.18);
+/* Tema escuro (padrão) */
+:root,
+:root[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --surface: #151515;
+  --text: #ededed;
+  --muted: #a1a1aa;
+  --line: rgba(255, 255, 255, 0.12);
+  --accent: #6d3fd9;
+  --accent-hover: #7d52e8;
+  --accent-text: #a78bfa;
+  --on-accent: #ffffff;
+}
 
-  --accent: #ffffff;
-  --accent-hover: #d9d9d9;
-  --accent-text: #ffffff;
-  --on-accent: #000000;
+/* Tema claro */
+:root[data-theme="light"] {
+  --bg: #f4f4f5;
+  --surface: #ffffff;
+  --text: #18181b;
+  --muted: #52525b;
+  --line: rgba(0, 0, 0, 0.14);
+  --accent: #5b30c4;
+  --accent-hover: #4a24a8;
+  --accent-text: #5b30c4;
+  --on-accent: #ffffff;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 /* ---------- Base ---------- */
@@ -197,8 +218,17 @@ img {
   background: var(--surface);
 }
 
+/* No tema escuro mostra o sol (leva ao claro); no claro mostra a lua. */
 .theme-toggle .icon--moon {
   display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon--sun {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon--moon {
+  display: block;
 }
 
 /* ---------- Apresentação ---------- */
@@ -295,7 +325,6 @@ img {
   from {
     transform: translateY(110%);
   }
-
   to {
     transform: translateY(0);
   }
@@ -361,6 +390,7 @@ img {
   color: var(--muted);
 }
 
+/* Cada linha da lista tem borda superior; a primeira não precisa duplicar a da seção. */
 .stack__item:nth-child(-n + 2) {
   border-top: 0;
   padding-top: 0;
@@ -463,6 +493,115 @@ img {
   }
 }
 
+/* ---------- Tela de entrada ---------- */
+/* Preto e branco fixos: não mudam com o tema claro/escuro. */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font: inherit;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.7s var(--ease), visibility 0s linear 0.7s;
+}
+
+.intro:focus-visible {
+  outline: 1px solid #fff;
+  outline-offset: -1.5rem;
+  border-radius: 0;
+}
+
+.intro.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro__name {
+  font-size: clamp(3rem, 1.5rem + 9vw, 8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.intro__hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(2.5rem, 9vh, 5rem);
+  width: min(100% - 4rem, 24rem);
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  line-height: 1.4;
+  animation: intro-blink 1.6s steps(1, end) infinite;
+}
+
+@keyframes intro-blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0.12;
+  }
+}
+
+/* Detalhes brancos: cantos de moldura */
+.intro__corner {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0 solid #fff;
+}
+
+.intro__corner--tl {
+  top: 1.25rem;
+  left: 1.25rem;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.intro__corner--tr {
+  top: 1.25rem;
+  right: 1.25rem;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.intro__corner--bl {
+  bottom: 1.25rem;
+  left: 1.25rem;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.intro__corner--br {
+  bottom: 1.25rem;
+  right: 1.25rem;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+/* Enquanto a entrada está aberta, a página atrás não rola */
+html.intro-ativa,
+html.intro-ativa body {
+  overflow: hidden;
+}
+
 /* ---------- Movimento reduzido ---------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -479,6 +618,15 @@ img {
   }
 
   .statement__word {
+    animation: none;
+  }
+
+  .intro,
+  .intro.is-leaving {
+    transition: none;
+  }
+
+  .intro__hint {
     animation: none;
   }
 }
