@@ -35,6 +35,43 @@
     <span class="intro__name">c0ffe</span>
     <span class="intro__hint">aperta em qualquer lugar da tela para entrar</span>
   </button>
+  <script>
+    /* Tela de entrada: fica inline de propósito, para fechar mesmo se js/script.js não carregar. */
+    (function () {
+      var intro = document.querySelector('[data-intro]');
+      if (!intro) return;
+      var root = document.documentElement;
+      var done = false;
+      var sel = '.skip-link, .site-header, main, .site-footer';
+
+      function setInert(on) {
+        var els = document.querySelectorAll(sel);
+        for (var i = 0; i < els.length; i++) {
+          if (on) els[i].setAttribute('inert', '');
+          else els[i].removeAttribute('inert');
+        }
+      }
+
+      function leave() {
+        if (done) return;
+        done = true;
+        root.classList.remove('intro-ativa');
+        setInert(false);
+        intro.classList.add('is-leaving');
+        window.scrollTo(0, 0);
+        setTimeout(function () { if (intro.parentNode) intro.parentNode.removeChild(intro); }, 1200);
+      }
+
+      root.classList.add('intro-ativa');
+      intro.addEventListener('click', leave);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (done) return;
+        setInert(true);
+        try { intro.focus({ preventScroll: true }); } catch (e) { intro.focus(); }
+      });
+    })();
+  </script>
 
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
