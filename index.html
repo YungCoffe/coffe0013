@@ -6,7 +6,7 @@
   <title>Coffe | Dev em desenvolvimento</title>
   <meta name="description" content="Coffe, dev em desenvolvimento em São Paulo, Brasil. HTML, CSS, JavaScript e Node.js.">
   <meta name="color-scheme" content="dark light">
-  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
   <!-- Fonte: Manrope (Google Fonts). Se não carregar, o site usa a fonte padrão do sistema. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,9 +22,20 @@
   </script>
 
   <link rel="stylesheet" href="css/style.css">
+  <noscript><style>.intro{display:none !important}</style></noscript>
   <script src="js/script.js" defer></script>
 </head>
 <body id="topo">
+  <!-- Tela de entrada: aparece antes do site. Clique, toque ou tecle Enter/Espaço para entrar. -->
+  <button class="intro" type="button" data-intro aria-label="Entrar no site de c0ffe">
+    <span class="intro__corner intro__corner--tl" aria-hidden="true"></span>
+    <span class="intro__corner intro__corner--tr" aria-hidden="true"></span>
+    <span class="intro__corner intro__corner--bl" aria-hidden="true"></span>
+    <span class="intro__corner intro__corner--br" aria-hidden="true"></span>
+    <span class="intro__name">c0ffe</span>
+    <span class="intro__hint">aperta em qualquer lugar da tela para entrar</span>
+  </button>
+
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
   <header class="site-header">
@@ -50,7 +61,7 @@
       <div class="hero__id">
         <figure class="avatar" data-avatar>
           <span class="avatar__fallback" aria-hidden="true">C</span>
-          <img class="avatar__img" src="assets/saske.png" alt="Foto de Coffe" width="400" height="400" decoding="async">
+          <img class="avatar__img" src="assets/foto.jpg" alt="Foto de Coffe" width="400" height="400" decoding="async">
         </figure>
         <div class="hero__text">
           <h1 id="nome" class="hero__name">Coffe</h1>
