@@ -1,4 +1,3 @@
-
 (() => {
   'use strict';
 
@@ -50,5 +49,36 @@
     } else {
       photo.addEventListener('error', removePhoto, { once: true });
     }
+  }
+
+  /* ---------- Tela de entrada ---------- */
+  /* Aparece a cada visita. Clique, toque ou Enter/Espaço (o botão ocupa a tela toda). */
+
+  const intro = document.querySelector('[data-intro]');
+
+  if (intro) {
+    const siteParts = document.querySelectorAll('.skip-link, .site-header, main, .site-footer');
+
+    root.classList.add('intro-ativa');
+    siteParts.forEach((el) => el.setAttribute('inert', ''));
+    intro.focus({ preventScroll: true });
+
+    let entered = false;
+
+    const enter = () => {
+      if (entered) return;
+      entered = true;
+
+      root.classList.remove('intro-ativa');
+      siteParts.forEach((el) => el.removeAttribute('inert'));
+      intro.classList.add('is-leaving');
+      window.scrollTo(0, 0);
+
+      const remove = () => intro.remove();
+      intro.addEventListener('transitionend', remove, { once: true });
+      setTimeout(remove, 1000);
+    };
+
+    intro.addEventListener('click', enter);
   }
 })();
